@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Выборы в селе Каменка</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .candidate {
+      background-color: white;
+      border-radius: 16px;
+      padding: 20px 30px;
+      margin: 12px 0;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .candidate:hover {
+      background-color: #f0f0f0;
+    }
+
+    .candidate.selected {
+      background-color: #e6f7ff;
+      border: 2px solid #1890ff;
+    }
+
+    .radio {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #999;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio.checked {
+      border-color: #1890ff;
+      background-color: #1890ff;
+    }
+
+    .radio.checked::after {
+      content: "✓";
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .instruction {
+      margin-top: 30px;
+      color: #666;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Здравствуйте, помогите селу Каменка выбрать победителя!</h1>
+
+  <div class="candidate" data-name="Фридрих Коломенский">
+    <span>Фридрих Коломенский</span>
+    <div class="radio"></div>
+  </div>
+
+  <div class="candidate" data-name="Марк Антилео">
+    <span>Марк Антилео</span>
+    <div class="radio"></div>
+  </div>
+
+  <div class="candidate" data-name="Василий Аргонский">
+    <span>Василий Аргонский</span>
+    <div class="radio"></div>
+  </div>
+
+  <div class="instruction">Выбери победителя, который получит главный приз!</div>
+
+  <script>
+    let selected = null;
+    const candidates = document.querySelectorAll('.candidate');
+
+    candidates.forEach(candidate => {
+      candidate.addEventListener('click', () => {
+        if (selected) return;
+
+        selected = candidate.dataset.name;
+        candidate.classList.add('selected');
+        candidate.querySelector('.radio').classList.add('checked');
+
+        setTimeout(() => {
+          alert(Вы выбрали: ${selected}!\nВыбор окончательный.);
+        }, 300);
+      });
+    });
+  </script>
+</body>
+</html>
