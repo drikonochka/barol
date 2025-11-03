@@ -1,84 +1,69 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Выборы в селе Каменка</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #f0f8ff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      text-align: center;
     }
-
     h1 {
-      font-size: 24px;
+      text-align: center;
       margin-bottom: 30px;
-      color: #333;
+      color: #2c3e50;
     }
-
     .candidate {
-      background-color: white;
-      border-radius: 16px;
-      padding: 20px 30px;
-      margin: 12px 0;
-      width: 300px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      width: 300px;
+      padding: 16px;
+      margin: 10px 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
     }
-
     .candidate:hover {
-      background-color: #f0f0f0;
+      background: #f8f9fa;
     }
-
     .candidate.selected {
-      background-color: #e6ffe6; /* светло-зелёный фон */
-      border: 2px solid #2e8b57; /* тёмно-зелёная рамка */
-      cursor: default !important;
+      background: #e6ffe6;
+      border: 2px solid #2e8b57;
+      cursor: default;
     }
-
     .radio {
-      width: 24px;
-      height: 24px;
-      border: 2px solid #999;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #888;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .radio.checked {
-      border-color: #2e8b57; /* зелёная рамка */
-      background-color: #2e8b57; /* зелёный фон */
+      background: #2e8b57;
+      border-color: #2e8b57;
     }
-
     .radio.checked::after {
       content: "✓";
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 14px;
     }
-
     .instruction {
       margin-top: 30px;
       color: #666;
-      font-size: 16px;
     }
-
-    /* После выбора — другие кандидаты "затемняются" */
     body.has-selected .candidate:not(.selected) {
-      opacity: 0.5;
+      opacity: 0.4;
       pointer-events: none;
     }
   </style>
@@ -104,24 +89,18 @@
   <div class="instruction">Выбери победителя, который получит главный приз!</div>
 
   <script>
-    let selected = null;
+    let selected = false;
     const candidates = document.querySelectorAll('.candidate');
-    const body = document.body;
-
-    candidates.forEach(candidate => {
-      candidate.addEventListener('click', () => {
-        if (selected) return; // уже выбран — ничего не делать
-
-        selected = candidate.dataset.name;
-        candidate.classList.add('selected');
-        candidate.querySelector('.radio').classList.add('checked');
-        
-        // Добавляем класс на body, чтобы заблокировать остальных
-        body.classList.add('has-selected');
-
+    candidates.forEach(el => {
+      el.addEventListener('click', () => {
+        if (selected) return;
+        selected = true;
+        el.classList.add('selected');
+        el.querySelector('.radio').classList.add('checked');
+        document.body.classList.add('has-selected');
         setTimeout(() => {
-          alert(Вы выбрали: ${selected}!\nВыбор окончательный.);
-        }, 300);
+          alert('Ваш выбор учтён! Голосование завершено.');
+        }, 200);
       });
     });
   </script>
