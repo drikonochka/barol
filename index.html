@@ -32,7 +32,7 @@
       width: 300px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -43,8 +43,9 @@
     }
 
     .candidate.selected {
-      background-color: #e6f7ff;
-      border: 2px solid #1890ff;
+      background-color: #e6ffe6; /* светло-зелёный фон */
+      border: 2px solid #2e8b57; /* тёмно-зелёная рамка */
+      cursor: default !important;
     }
 
     .radio {
@@ -58,8 +59,8 @@
     }
 
     .radio.checked {
-      border-color: #1890ff;
-      background-color: #1890ff;
+      border-color: #2e8b57; /* зелёная рамка */
+      background-color: #2e8b57; /* зелёный фон */
     }
 
     .radio.checked::after {
@@ -73,6 +74,12 @@
       margin-top: 30px;
       color: #666;
       font-size: 16px;
+    }
+
+    /* После выбора — другие кандидаты "затемняются" */
+    body.has-selected .candidate:not(.selected) {
+      opacity: 0.5;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -99,14 +106,18 @@
   <script>
     let selected = null;
     const candidates = document.querySelectorAll('.candidate');
+    const body = document.body;
 
     candidates.forEach(candidate => {
       candidate.addEventListener('click', () => {
-        if (selected) return;
+        if (selected) return; // уже выбран — ничего не делать
 
         selected = candidate.dataset.name;
         candidate.classList.add('selected');
         candidate.querySelector('.radio').classList.add('checked');
+        
+        // Добавляем класс на body, чтобы заблокировать остальных
+        body.classList.add('has-selected');
 
         setTimeout(() => {
           alert(Вы выбрали: ${selected}!\nВыбор окончательный.);
